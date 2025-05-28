@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHSKUK - Portal i Pacientit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: white;
+            line-height: 1.6;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: #e8f4fd;
+            padding: 8px 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .top-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .emergency-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .emergency-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #7DB1FF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* Main Header */
+        .main-header {
+            background-color: white;
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            height: 70px;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .info-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background-color: #e8f4fd;
+            border-radius: 8px;
+            min-width: 160px;
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7DB1FF;
+            font-size: 18px;
+        }
+
+        .info-text h3 {
+            color: #7DB1FF;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .info-text p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .search-btn {
+            background-color: #f0f0f0;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Navigation */
+        .navigation {
+            background-color: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            margin-right: 40px;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 18px 0;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #7DB1FF;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: rgba(0,0,0,.7) none repeat scroll 0 0;
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .breadcrumb a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+
+        .breadcrumb .current {
+            color: #7DB1FF;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .portal-card {
+            background: white;
+            border-radius: 12px;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .portal-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #7DB1FF;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portal-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .portal-card h2 {
+            font-size: 26px;
+            color: #333;
+            font-weight: 400;
+        }
+
+        .portal-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: #fafafa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #7DB1FF;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(125, 177, 255, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #7DB1FF;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(125, 177, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e0e0e0;
+            padding: 16px 40px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: #7DB1FF;
+            color: #7DB1FF;
+        }
+
+        .verification-info {
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .verification-info h3 {
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .phone-number {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .code-input {
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 8px;
+            padding: 20px;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* Dashboard Styles - Matching First Image */
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 80px auto;
+            max-width: 700px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid #f0f0f0;
+        }
+
+.inline-icon {
+    display: flex;
+    align-items: center;
+}
+
+.inline-icon img {
+    width: 25px;
+    height: 25px;
+    display: block;
+}
+
+
+.dashboard-header h2 {
+    font-size: 25px;
+    margin: 0 0 10px 0;
+    color: #333;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+
+
+        .dashboard-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .welcome-card h3 {
+            color: #1976d2;
+            font-size: 20px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .welcome-card p {
+            color: #1976d2;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .procedures-section h3 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .procedure-item {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .procedure-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .procedure-info h4 {
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 8px 0;
+        }
+
+        .procedure-date {
+            color: #666;
+            font-size: 14px;
+            margin: 4px 0;
+        }
+
+        .procedure-position {
+            color: #dc3545;
+            font-size: 14px;
+            margin: 4px 0;
+            font-weight: 500;
+        }
+
+        .procedure-completed {
+            color: #28a745;
+            font-size: 14px;
+            margin: 4px 0;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .status-waiting {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status-done {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .logout-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .logout-btn {
+            background: white;
+            border: 1px solid #666;
+            color: #666;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #666;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #222;
+            color: white;
+            padding: 60px 0 40px;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 60px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .footer-section p {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .language-select {
+            background-color: #7DB1FF;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .header-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+            }
+
+            .nav-menu li {
+                margin-right: 20px;
+                margin-bottom: 10px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-secondary {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="emergency-info">
+                <div class="emergency-icon">🏥</div>
+                <span>Shërbime emergjente 24 orë në ditë duke thirrur në numrin +381 38 500 600</span>
+            </div>
+            <div class="social-icons">
+                <a href="#">f</a>
+                <a href="#">t</a>
+                <a href="#">📺</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-EInlMD44gc7K01ENsNbAg15Go0ZZ4P.png" alt="SHSKUK Logo">
+                </div>
+            </div>
+            <div class="header-info">
+                <div class="info-box">
+                    <div class="info-icon">📱</div>
+                    <div class="info-text">
+                        <h3>Emergjenca</h3>
+                        <p>+381 38 500 600</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text">
+                        <h3>Lagja e spitalit</h3>
+                        <p>Prishtinë, 10000</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-icon">🕐</div>
+                    <div class="info-text">
+                        <h3>I hapur</h3>
+                        <p>24/7</p>
+                    </div>
+                </div>
+                <button class="search-btn">🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <div class="nav-content">
+            <ul class="nav-menu">
+                <li><a href="#">KRYEFAQJA</a></li>
+                <li><a href="#">SHËSKUK</a></li>
+                <li><a href="#">QKUK</a></li>
+                <li><a href="#">QKËUK</a></li>
+                <li><a href="#">NJËSITE PËRBËRËSE</a></li>
+                <li><a href="#">LAJMET</a></li>
+                <li><a href="#">DOKUMENTE DHE PUBLIKIME</a></li>
+                <li><a href="#">GALERIA</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>KLINIKA E KARDIOLOGJISË</h1>
+        <div class="breadcrumb">
+            <a href="#">Kryefaqja</a> > <span class="current">Klinika e Kardiologjisë</span>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="main-content">
+        <div class="portal-card">
+            <div class="portal-icon">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-OYMtOJbpR0Y2spgj1kdPOGvaQ444CV.png" alt="User Icon">
+            </div>
+            <h2>Portal i Pacientit</h2>
+            <p>Futni numrin tuaj personal për të kontrolluar statusin tuaj mjekësor në mënyrë të sigurt</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="personalId">Numri Personal (ID)</label>
+                    <input type="text" id="personalId" placeholder="Shkruani numrin tuaj personal" maxlength="10">
+                </div>
+                <button type="submit" class="btn-primary">Dërgo Kodin e Verifikimit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Verification Page -->
+    <div id="verificationPage" class="main-content hidden">
+        <div class="portal-card">
+            <div class="portal-icon">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20%282%29-k1WYbRV4Mjw2bLZgckjd9RpGVdYs7v.png" alt="Security Icon">
+            </div>
+            <h2>Verifikimi</h2>
+            
+            <div class="verification-info">
+                <h3>Një kod verifikimi është dërguar në numrin:</h3>
+                <div class="phone-number">+383 49 *** 397</div>
+            </div>
+            
+            <form id="verificationForm">
+                <div class="form-group">
+                    <label for="verificationCode">Kodi i verifikimit</label>
+                    <input type="text" id="verificationCode" class="code-input" placeholder="----" maxlength="4">
+                </div>
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="goBack()">Prapa</button>
+                    <button type="submit" class="btn-primary">Verifiko</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="hidden">
+        <div class="dashboard-card">
+            <div class="dashboard-header">
+                <h2><span class="inline-icon"><img src="img/user1.png" alt="" srcset=""></span> Portal i pacientit</h2>
+                <p class="dashboard-description">Futni numrin tuaj personal për të kontrolluar statusin tuaj mjekësor në mënyrë të sigurt</p>
+            </div>
+            
+            <div class="welcome-card">
+                <h3>Mirë se erdhe, Agim Gashi!</h3>
+                <p>Numri Personal: 1234567890</p>
+            </div>
+            
+            <div class="procedures-section">
+                <h3>Procedurat tuaja:</h3>
+                
+                <div class="procedure-item">
+                    <div class="procedure-info">
+                        <h4>Ekokardiografia</h4>
+                        <p class="procedure-date">Data: 2024-05-28</p>
+                        <p class="procedure-position">Pozicioni në listë: #3</p>
+                    </div>
+                    <span class="status-badge status-waiting">Në pritje</span>
+                </div>
+                
+                <div class="procedure-item">
+                    <div class="procedure-info">
+                        <h4>Ergometria</h4>
+                        <p class="procedure-date">Data: 2024-05-20</p>
+                        <p class="procedure-completed">Përfunduar më: 2024-05-20</p>
+                    </div>
+                    <span class="status-badge status-done">Kryer</span>
+                </div>
+            </div>
+            
+            <div class="logout-section">
+                <button class="logout-btn" onclick="logout()">Dil nga sistemi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Zgjedh Gjuhën</h3>
+                <select class="language-select">
+                    <option>Shqip</option>
+                    <option>English</option>
+                    <option>Srpski</option>
+                </select>
+            </div>
+            <div class="footer-section">
+                <h3>Kontakti</h3>
+                <p>Lagja Spitalit, Prishtinë 10000, Kosovë</p>
+                <p>+381 38 500 600</p>
+            </div>
+            <div class="footer-section">
+                <h3>Komento</h3>
+                <p>Na dërgoni komentet tuaja për të përmirësuar shërbimet tona.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Demo credentials (not displayed on site)
+        const DEMO_ID = "9876543210";
+        const DEMO_CODE = "7429";
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const personalId = document.getElementById('personalId').value;
+            
+            if (personalId.length >= 8) {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('verificationPage').classList.remove('hidden');
+            } else {
+                alert('Ju lutem shkruani një numër personal të vlefshëm');
+            }
+        });
+
+        document.getElementById('verificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const code = document.getElementById('verificationCode').value;
+            
+            if (code.length === 4) {
+                document.getElementById('verificationPage').classList.add('hidden');
+                document.getElementById('dashboardPage').classList.remove('hidden');
+            } else {
+                alert('Ju lutem shkruani kodin 4-shifror');
+            }
+        });
+
+        function goBack() {
+            document.getElementById('verificationPage').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('personalId').value = '';
+        }
+
+        function logout() {
+            document.getElementById('dashboardPage').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('personalId').value = '';
+            document.getElementById('verificationCode').value = '';
+        }
+
+        // Auto-format verification code input
+        document.getElementById('verificationCode').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            e.target.value = value;
+        });
+
+        // Auto-format personal ID input
+        document.getElementById('personalId').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
