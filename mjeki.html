@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel i Mjekut</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-tab {
+            padding: 12px 0;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-tab.active {
+            color: #333;
+            border-bottom-color: #333;
+        }
+
+        .patient-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .list-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .patient-count {
+            background: #f8f9fa;
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 13px;
+        }
+
+        .patient-row {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #f8f9fa;
+            cursor: pointer;
+        }
+
+        .patient-row:hover {
+            background: #fafafa;
+        }
+
+        .patient-number {
+            width: 32px;
+            height: 32px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 16px;
+        }
+
+        .patient-initials {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #666;
+            margin-right: 16px;
+        }
+
+        .patient-info {
+            flex: 1;
+        }
+
+        .patient-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .patient-details {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        .patient-procedure {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .patient-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid;
+        }
+
+        .status-high {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #dc2626;
+        }
+
+        .status-waiting {
+            background: #fffbeb;
+            border-color: #fed7aa;
+            color: #d97706;
+        }
+
+        .patient-detail {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .detail-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .back-link {
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .detail-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .detail-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .detail-subtitle {
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .patient-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .card-avatar {
+            width: 60px;
+            height: 60px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-details {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .card-contact {
+            color: #666;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid;
+        }
+
+        .btn-primary {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            border-color: #dc2626;
+            color: #dc2626;
+        }
+
+        .detail-tabs {
+            display: flex;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-tab {
+            padding: 16px 24px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .detail-tab.active {
+            color: #333;
+            border-bottom-color: #333;
+        }
+
+        .tab-content {
+            padding: 24px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .content-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .item-date {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .medication-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            width: 90%;
+            max-width: 480px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .btn-cancel {
+            background: white;
+            border: 1px solid #ddd;
+            color: #666;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="listView">
+            <div class="header">
+                <h1>Panel i Mjekut</h1>
+                <div class="subtitle">Pacientët e sotëm - 5/28/2025</div>
+            </div>
+
+            <div class="nav-tabs">
+                <a href="#" class="nav-tab active">Pacientët e Sotëm</a>
+            </div>
+
+            <div class="patient-list">
+                <div class="list-header">
+                    <div class="list-title">Lista e Pacientëve - Sot</div>
+                    <div class="patient-count">5 pacientë</div>
+                </div>
+
+                <div class="patient-row" onclick="showDetail()">
+                    <div class="patient-number">1</div>
+                    <div class="patient-initials">AK</div>
+                    <div class="patient-info">
+                        <div class="patient-name">Agim Krasniqi</div>
+                        <div class="patient-details">09:00 • 60 vjeç • Prishtinë</div>
+                        <div class="patient-procedure">Procedura: Koronarografi</div>
+                    </div>
+                    <div class="patient-actions">
+                        <span class="status-badge status-high">E lartë</span>
+                        <span class="status-badge status-waiting">Në pritje</span>
+                    </div>
+                </div>
+
+                <div class="patient-row">
+                    <div class="patient-number">2</div>
+                    <div class="patient-initials">VM</div>
+                    <div class="patient-info">
+                        <div class="patient-name">Valdete Mustafa</div>
+                        <div class="patient-details">10:30 • 47 vjeç • Gjilan</div>
+                        <div class="patient-procedure">Procedura: Elektrofiziologji</div>
+                    </div>
+                    <div class="patient-actions">
+                        <span class="status-badge status-waiting">Mesatare</span>
+                        <span class="status-badge status-waiting">Në pritje</span>
+                    </div>
+                </div>
+
+                <div class="patient-row">
+                    <div class="patient-number">3</div>
+                    <div class="patient-initials">RB</div>
+                    <div class="patient-info">
+                        <div class="patient-name">Ramiz Berisha</div>
+                        <div class="patient-details">12:00 • 73 vjeç • Pejë</div>
+                        <div class="patient-procedure">Procedura: Ekokardiografi</div>
+                    </div>
+                    <div class="patient-actions">
+                        <span class="status-badge status-waiting">E ulët</span>
+                        <span class="status-badge status-waiting">Në pritje</span>
+                    </div>
+                </div>
+
+                <div class="patient-row">
+                    <div class="patient-number">4</div>
+                    <div class="patient-initials">FG</div>
+                    <div class="patient-info">
+                        <div class="patient-name">Fitore Gashi</div>
+                        <div class="patient-details">14:00 • 40 vjeç • Mitrovicë</div>
+                        <div class="patient-procedure">Procedura: Ergometria</div>
+                    </div>
+                    <div class="patient-actions">
+                        <span class="status-badge status-waiting">Mesatare</span>
+                        <span class="status-badge status-waiting">Në pritje</span>
+                    </div>
+                </div>
+
+                <div class="patient-row">
+                    <div class="patient-number">5</div>
+                    <div class="patient-initials">BH</div>
+                    <div class="patient-info">
+                        <div class="patient-name">Besart Hoxha</div>
+                        <div class="patient-details">15:30 • 65 vjeç • Ferizaj</div>
+                        <div class="patient-procedure">Procedura: Angio CT</div>
+                    </div>
+                    <div class="patient-actions">
+                        <span class="status-badge status-high">E lartë</span>
+                        <span class="status-badge status-waiting">Në pritje</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detailView" class="patient-detail">
+            <div class="detail-header">
+                <a href="#" class="back-link" onclick="showList()">← Kthehu te lista</a>
+                
+                <div class="detail-top">
+                    <div>
+                        <h1 class="detail-name">Agim Krasniqi</h1>
+                        <div class="detail-subtitle">Historia Mjekësore e Plotë</div>
+                        
+                        <div class="patient-card">
+                            <div class="card-avatar">AK</div>
+                            <div class="card-info">
+                                <div class="card-name">Agim Krasniqi</div>
+                                <div class="card-details">Mosha: 60 vjeç<br>ID: 1234567890</div>
+                            </div>
+                            <div class="card-contact">
+                                Prishtinë<br>+383 44 123 456<br>09:00 - Koronarografi
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-actions">
+                        <button class="btn btn-primary" onclick="showModal()">E Kryer</button>
+                        <button class="btn btn-secondary">Ska Ardhur</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-tabs">
+                <a href="#" class="detail-tab" onclick="showTab('diagnozat')">Diagnozat</a>
+                <a href="#" class="detail-tab" onclick="showTab('procedurat')">Procedurat</a>
+                <a href="#" class="detail-tab active" onclick="showTab('medikamentet')">Medikamentet</a>
+                <a href="#" class="detail-tab" onclick="showTab('analizat')">Analizat</a>
+                <a href="#" class="detail-tab" onclick="showTab('hospitalizmet')">Hospitalizmet</a>
+            </div>
+
+            <div class="tab-content">
+                <div id="diagnozat" class="tab-pane">
+                    <div class="section-title">Diagnozat Aktuale</div>
+                    <div class="content-item">
+                        <div class="item-title">Hipertensioni arterial</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="item-title">Diabetes mellitus tip 2</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="item-title">Koronaropatia</div>
+                    </div>
+                </div>
+
+                <div id="procedurat" class="tab-pane">
+                    <div class="section-title">Procedurat e Mëparshme</div>
+                    <div class="content-item">
+                        <div class="item-title">Ekokardiografi</div>
+                        <div class="item-date">2024-12-15</div>
+                        <div>Rezultati: EF 45%, hipokinezi inferolaterale</div>
+                    </div>
+                     <div class="content-item">
+                        <div class="item-title">Ergometria</div>
+                        <div class="item-date">2024-11-20</div>
+                        <div>Rezultati: Pozitive për iskemi</div>
+                    </div>
+                </div>
+
+                <div id="medikamentet" class="tab-pane active">
+                    <div class="section-title">Medikamentet Aktuale</div>
+                    <div class="medication-grid">
+                        <div class="content-item">
+                            <div class="item-title">Metformin 500mg</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">Lisinopril 10mg</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">Aspirin 100mg</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="analizat" class="tab-pane">
+                    <div class="section-title">Rezultatet e Analizave</div>
+                    <div class="content-item">
+                        <div class="item-title">Troponin I</div>
+                        <div class="item-date">2025-01-20</div>
+                        <div>0.8 ng/ml Normal: < 0.04</div>
+                    </div>
+                     <div class="content-item">
+                        <div class="item-title">CK-MB</div>
+                        <div class="item-date">2025-01-20</div>
+                        <div>25 U/L Normal: < 25</div>
+                    </div>
+                </div>
+
+                <div id="hospitalizmet" class="tab-pane">
+                    <div class="section-title">Hospitalizmet e Mëparshme</div>
+                    <div class="content-item">
+                        <div class="item-title">Infarkt miokardi akut</div>
+                        <div class="item-date">Data: 2024-12-01</div>
+                        <div>7 ditë</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Shënim për Procedurën</div>
+            <div style="margin-bottom: 20px;">
+                <div style="font-weight: 600;">Agim Krasniqi</div>
+                <div style="color: #666;">Koronarografi<br>09:00</div>
+            </div>
+            <textarea class="form-textarea" placeholder="Shkruani shënimin për procedurën e kryer..."></textarea>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Anulo</button>
+                <button class="btn btn-primary" onclick="complete()">Ruaj dhe Përfundo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showList() {
+            document.getElementById('listView').style.display = 'block';
+            document.getElementById('detailView').style.display = 'none';
+        }
+
+        function showDetail() {
+            document.getElementById('listView').style.display = 'none';
+            document.getElementById('detailView').style.display = 'block';
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.detail-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function showModal() {
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function complete() {
+            alert('Procedura u përfundua!');
+            closeModal();
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

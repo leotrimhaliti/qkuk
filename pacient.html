@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Regjistrimi i Pacientëve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #dceefb, #e2e8f0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      max-width: 800px;
+      width: 100%;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+      font-size: 28px;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .form-group {
+      flex: 1 1 45%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    label {
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, select {
+      padding: 12px 14px 12px 40px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .icon {
+      position: absolute;
+      top: 35px;
+      left: 10px;
+      font-size: 16px;
+      color: #888;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #2c80b4;
+    }
+
+    @media (max-width: 600px) {
+      .form-group {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🩺 Forma e Regjistrimit të Pacientëve</h2>
+    <form action="#" method="post">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="emri">Emri</label>
+          <span class="icon">👤</span>
+          <input type="text" id="emri" name="emri" required>
+        </div>
+
+        <div class="form-group">
+          <label for="mbiemri">Mbiemri</label>
+          <span class="icon">👤</span>
+          <input type="text" id="mbiemri" name="mbiemri" required>
+        </div>
+
+        <div class="form-group">
+          <label for="numriPersonal">Numri Personal</label>
+          <span class="icon">#</span>
+          <input type="text" id="numriPersonal" name="numriPersonal" required>
+        </div>
+
+        <div class="form-group">
+          <label for="vendbanimi">Vendbanimi</label>
+          <span class="icon">🏠</span>
+          <input type="text" id="vendbanimi" name="vendbanimi" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dataLindjes">Data e Lindjes</label>
+          <span class="icon">📅</span>
+          <input type="date" id="dataLindjes" name="dataLindjes" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telefoni">Numri i Telefonit</label>
+          <span class="icon">📞</span>
+          <input type="tel" id="telefoni" name="telefoni" required>
+        </div>
+
+        <div class="form-group">
+          <label for="telefoniFamiljarit">Numri i Telefonit te Familjarit</label>
+          <span class="icon">📱</span>
+          <input type="tel" id="telefoniFamiljarit" name="telefoniFamiljarit" required>
+        </div>
+
+        <div class="form-group">
+          <label for="mjeku">Mjeku Referues</label>
+          <span class="icon">🩻</span>
+          <select id="mjeku" name="mjeku" required>
+            <option value="">-- Zgjedh mjekun --</option>
+            <option value="Dr. Arben Krasniqi">Dr. Arben Krasniqi</option>
+            <option value="Dr. Luljeta Basha">Dr. Luljeta Basha</option>
+            <option value="Dr. Mentor Hoxha">Dr. Mentor Hoxha</option>
+            <option value="Dr. Elira Gashi">Dr. Elira Gashi</option>
+            <option value="Dr. Flamur Berisha">Dr. Flamur Berisha</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">📋 Regjistro Pacientin</button>
+    </form>
+  </div>
+</body>
+</html>
